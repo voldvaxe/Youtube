@@ -1,0 +1,193 @@
+<template>
+  <div>
+    <div>count</div> <br/>
+    <a  :href="google">google</a> <br/>
+    <div  :class="classes"> Hello world</div> <br/>
+    {{sayHi()}}
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data(){
+    return {
+        count: 0,
+        google: 'https://www.google.com',
+        classes: ['class1', 'class2']
+    }
+  } ,
+  methods: {
+    sayHi(){
+        return 'Hello world'
+    }
+  }
+}
+</script>
+
+<style scoped>
+.class1 {
+    color: red;
+}
+.class2{
+    letter-spacing: 5px;
+}
+</style>
+
+-----------------------------------------------------------
+
+<template>
+  <div>
+    <input type="text"  v-model="name"  >
+    {{name}}
+    <button   v-on:click="counter++">  Click  </button> //show it in a function and increase by two
+    <button   v-on:click="counter--">  Click  </button>
+    {{counter}}
+
+    <select v-model="selected">
+        <option disabled value="">select a cat</option>
+        <option value='red'>red cat</option>
+        <option value='green'>green cat</option>
+        <option value='blue'>blue cat</option>
+    </select>
+    {{selected}}
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data(){
+    return {
+        name : '',
+        counter: 0,
+        selected: ''
+    }
+  } 
+}
+</script>
+
+
+-----------------------------------------------------------
+
+<template>
+  <div>
+    <div v-if="gender === 'male'">
+        male
+    </div>
+    <div v-else-if="gender === 'female'">
+        female
+    </div>
+    <div v-else>
+        alian
+    </div>
+
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data(){
+    return {
+        gender: 'male',
+    }
+  } 
+}
+</script>
+
+
+
+
+
+-----------------------------------------------------------
+
+<template>
+  <div>
+    <div v-for="(item, index) in items" :key='index'>
+        {{ index  }}. {{ item  }}
+    </div>
+
+
+    <div v-for="(s, index) in students" :key='index'>
+        {{ index }}. {{ s.name }}  {{ s.age }}  {{ s.department }}
+    </div>
+
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data(){
+    return {
+        students:['mohamed','Asaad','saeed','mohamed','rashed'],
+        employees : [
+            {name:'mohamed' , age:20 , department:'CS'},
+            {name:'Asaad' , age:21 , department:'IT'},
+            {name:'saeed' , age:22 , department:'AI'},
+            {name:'mohamed' , age:23 , department:'IS'},
+            {name:'rashed' , age:24 , department:'SW'}
+        ]
+    }
+  } 
+}
+</script>
+
+
+-----------------------------------------------------------
+
+<template>
+  <div>
+    <button   v-on:click="counter++">  Click  </button> //show it in a function and increase by two
+    <button   v-on:click="counter--">  Click  </button>
+    {{counter}}
+
+  </div>
+</template>
+
+<script>
+
+
+export default {
+  name: 'App',
+  components: {
+  },
+  data(){
+    return {
+        counter: 0,
+    }
+  } ,
+  watch:{
+    counter(){
+        console.log(this.counter);
+    }
+  }
+  /*
+    watch:{
+        handler(newValue, oldValue){
+            console.log(this.counter);
+        },
+        immediate: true,
+    }
+  
+  */
+}
+</script>
+

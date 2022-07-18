@@ -11,10 +11,6 @@ app.use(cookieParser());
     next();
   });
 */
-router.use((req, res, next) => {
-  console.log("Time: ", Date.now());
-  next();
-});
 
 app.get("/", (req, res) => {
   res.send("Hello world");
@@ -56,34 +52,37 @@ app
 
 ////////////////////////////////////
 
-//const express = require("express");
-//const router = express.Router();
+const jwt = require("jsonwebtoken");
 
-// define the home page route
-router.get("/", (req, res) => {
-  res.send("Birds home page");
+app.get("/createUser/:name", (req, res) => {
+  res.send(
+    jwt.sign({ name: req.params.name }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1d",
+    })
+  );
 });
-// define the about route
-router
-  .route("/about")
-  .get((req, res) => {
-    res.send("About birds get");
-  })
-  .post((req, res) => {
-    res.send("About birds post");
-  });
 
-module.exports = router;
+const auth = (req, res, next) => {
+  try {
+    var token = req.header("Authorization");
+    token = token.split(" ")[1];
+    if (!token)
+      return res.status(500).json({ msg: "invalid Authentication 1" });
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) return res.status(400).json({ msg: "invalid Authentication 2" });
+      req.user = user;
+      next();
+    });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
 
-/*
-    const birds = require('./birds')
+app.get("/user", auth, (req, res) => {
+  res.json({ msg: "You are " + req.user.name });
+});
 
-    // ...
-
-    app.use('/birds', birds)
-*/
-
-//////////////////////////////////////
+////////////////////////////////////
 
 const PORT = 3000;
 app.listen(PORT, () => {
