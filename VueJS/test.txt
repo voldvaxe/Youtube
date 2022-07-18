@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>count</div> <br/>
-    <a  :href="google">google</a> <br/>
+    <a  v-bind:href="google">google</a> <br/>
     <div  :class="classes"> Hello world</div> <br/>
     {{sayHi()}}
   </div>
